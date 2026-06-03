@@ -1,18 +1,17 @@
 <!DOCTYPE html>
+
 <html lang="en">
 
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Faculty Dashboard</title>
+<title>Faculty Dashboard | CMS LMS</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
 <style>
 
@@ -28,103 +27,168 @@ background:#f4f7fb;
 display:flex;
 }
 
-.sidebar{
+/* Sidebar */
 
-width:260px;
+.sidebar{
+width:270px;
 background:#0f172a;
 height:100vh;
 position:fixed;
-
+left:0;
+top:0;
+overflow-y:auto;
+padding-top:20px;
 }
 
-.sidebar h2{
-
-color:white;
+.logo-section{
 text-align:center;
-padding:20px;
+margin-bottom:25px;
+}
 
+.logo-section img{
+width:140px;
+height:auto;
+object-fit:contain;
+margin-bottom:10px;
+}
+
+.logo-section h2{
+color:white;
+font-size:22px;
 }
 
 .sidebar a{
-
 display:block;
 padding:15px 25px;
 color:white;
 text-decoration:none;
-
+transition:.3s;
 }
 
 .sidebar a:hover{
-
 background:#2563eb;
-
 }
 
-.main{
+.sidebar i{
+margin-right:10px;
+}
 
-margin-left:260px;
+/* Main */
+
+.main{
+margin-left:270px;
 padding:30px;
 width:100%;
+}
 
+.header{
+background:white;
+padding:20px;
+border-radius:15px;
+box-shadow:0 3px 10px rgba(0,0,0,.08);
+margin-bottom:25px;
+}
+
+.header h1{
+color:#0f172a;
 }
 
 .card{
-
 background:white;
 padding:25px;
 border-radius:15px;
-margin-bottom:20px;
 box-shadow:0 3px 10px rgba(0,0,0,.08);
-
+margin-bottom:25px;
 }
 
 .card h2{
-
 color:#2563eb;
 margin-bottom:15px;
-
 }
 
 input,
 textarea{
-
 width:100%;
 padding:12px;
 border:1px solid #ddd;
 border-radius:8px;
 margin-bottom:15px;
+}
 
+textarea{
+height:120px;
+resize:none;
 }
 
 button{
-
-padding:12px 25px;
-border:none;
 background:#10b981;
 color:white;
+border:none;
+padding:12px 25px;
 border-radius:8px;
 cursor:pointer;
-
+font-weight:600;
 }
 
-.assignment{
+button:hover{
+opacity:.9;
+}
 
+.assignment,
+.resource,
+.submission{
 display:flex;
 justify-content:space-between;
+align-items:center;
 padding:15px;
 background:#f8fafc;
+border-radius:10px;
 margin-bottom:10px;
-border-radius:8px;
-
 }
 
-.download{
-
+.download-btn{
 background:#2563eb;
-padding:8px 15px;
 color:white;
-text-decoration:none;
+padding:8px 15px;
 border-radius:8px;
+text-decoration:none;
+}
+
+.stat{
+padding:15px;
+background:#f8fafc;
+border-radius:10px;
+margin-bottom:10px;
+}
+
+.success{
+color:green;
+margin-top:10px;
+}
+
+@media(max-width:768px){
+
+body{
+flex-direction:column;
+}
+
+.sidebar{
+position:relative;
+width:100%;
+height:auto;
+}
+
+.main{
+margin-left:0;
+}
+
+.assignment,
+.resource,
+.submission{
+flex-direction:column;
+align-items:flex-start;
+gap:10px;
+}
 
 }
 
@@ -136,83 +200,137 @@ border-radius:8px;
 
 <div class="sidebar">
 
+<div class="logo-section">
+
+<img
+src="../assets/logo.png"
+alt="CMS Logo">
+
 <h2>CMS LMS</h2>
 
-<a href="#"><i class="fa fa-home"></i> Dashboard</a>
+</div>
 
-<a href="#"><i class="fa fa-upload"></i> Upload Assignment</a>
+<a href="../index.html">
+<i class="fa fa-home"></i>
+Home
+</a>
 
-<a href="#"><i class="fa fa-book"></i> Resources</a>
+<a href="#">
+<i class="fa fa-gauge"></i>
+Dashboard
+</a>
 
-<a href="#"><i class="fa fa-users"></i> Student Submissions</a>
+<a href="#assignmentSection">
+<i class="fa fa-file-circle-plus"></i>
+Assignments
+</a>
 
-<a href="#"><i class="fa fa-star"></i> Feedback</a>
+<a href="#resourceSection">
+<i class="fa fa-folder-open"></i>
+Resources
+</a>
+
+<a href="#submissionSection">
+<i class="fa fa-users"></i>
+Student Submissions
+</a>
+
+<a href="#feedbackSection">
+<i class="fa fa-star"></i>
+Feedback
+</a>
 
 <a href="#" onclick="logout()">
-
-<i class="fa fa-sign-out"></i>
+<i class="fa fa-right-from-bracket"></i>
 Logout
-
 </a>
 
 </div>
 
 <div class="main">
 
-<div class="card">
+<div class="header">
 
-<h2 id="welcomeFaculty">
+<h1 id="welcomeFaculty">
+Welcome Faculty
+</h1>
 
-Faculty Dashboard
-
-</h2>
+<p>
+Faculty Learning Management Dashboard
+</p>
 
 </div>
 
 <!-- Upload Assignment -->
 
-<div class="card">
+<div class="card" id="assignmentSection">
 
 <h2>Upload Assignment Question</h2>
 
-<input type="text"
+<input
+type="text"
 placeholder="Assignment Title">
 
-<input type="file">
+<input
+type="file"
+id="assignmentFile">
 
-<button>
+<button onclick="uploadAssignment()">
 Upload Assignment
 </button>
+
+<p id="assignmentStatus"></p>
 
 </div>
 
 <!-- Upload Resources -->
 
-<div class="card">
+<div class="card" id="resourceSection">
 
 <h2>Upload Resource Material</h2>
 
-<input type="text"
-placeholder="Resource Name">
+<input
+type="text"
+placeholder="Resource Title">
 
-<input type="file">
+<input
+type="file"
+id="resourceFile">
 
-<button>
+<button onclick="uploadResource()">
 Upload Resource
 </button>
+
+<p id="resourceStatus"></p>
+
+</div>
+
+<!-- Uploaded Resources -->
+
+<div class="card">
+
+<h2>Available Resources</h2>
+
+<div class="resource">
+
+<span>
+No resources uploaded yet.
+</span>
+
+</div>
 
 </div>
 
 <!-- Student Submissions -->
 
-<div class="card">
+<div class="card" id="submissionSection">
 
 <h2>Student Submissions</h2>
 
-<div class="assignment">
+<div class="submission">
 
 <span>
-No submissions available
+No student submissions available.
 </span>
 
 </div>
@@ -221,17 +339,27 @@ No submissions available
 
 <!-- Feedback -->
 
-<div class="card">
+<div class="card" id="feedbackSection">
 
 <h2>Faculty Feedback Summary</h2>
 
-<p>
-Average Rating : 4.8 / 5
-</p>
+<div class="stat">
 
-<p>
-Total Feedback : 145
-</p>
+Average Rating : <strong>4.8 / 5</strong>
+
+</div>
+
+<div class="stat">
+
+Total Feedback : <strong>145</strong>
+
+</div>
+
+<div class="stat">
+
+Positive Feedback : <strong>92%</strong>
+
+</div>
 
 </div>
 
@@ -239,7 +367,7 @@ Total Feedback : 145
 
 <script>
 
-/* LOGIN CHECK */
+/* SESSION CHECK */
 
 const faculty =
 localStorage.getItem(
@@ -252,6 +380,8 @@ window.location.href =
 "../pages/faculty-login.html";
 
 }
+
+/* SHOW USER */
 
 document.getElementById(
 "welcomeFaculty"
@@ -271,8 +401,59 @@ window.location.href =
 
 }
 
+/* ASSIGNMENT */
+
+function uploadAssignment(){
+
+const file =
+document.getElementById(
+"assignmentFile"
+).files[0];
+
+if(!file){
+
+alert(
+"Please select an assignment file."
+);
+
+return;
+
+}
+
+document.getElementById(
+"assignmentStatus"
+).innerHTML =
+"<span class='success'>Assignment uploaded successfully.</span>";
+
+}
+
+/* RESOURCE */
+
+function uploadResource(){
+
+const file =
+document.getElementById(
+"resourceFile"
+).files[0];
+
+if(!file){
+
+alert(
+"Please select a resource file."
+);
+
+return;
+
+}
+
+document.getElementById(
+"resourceStatus"
+).innerHTML =
+"<span class='success'>Resource uploaded successfully.</span>";
+
+}
+
 </script>
 
 </body>
-
 </html>
