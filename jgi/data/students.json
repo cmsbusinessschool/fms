@@ -1,0 +1,26 @@
+[
+    {
+        "email": "dr.praveengujjar@cms.ac.in",
+        "password": "cms@2026",
+        "name": "Dr. Praveen Gujjar",
+        "role": "student"
+    },
+    {
+        "email": "harsha@cms.ac.in",
+        "password": "cms@2026",
+        "name": "Harsha",
+        "role": "student"
+    },
+    {
+        "email": "student2@cms.ac.in",
+        "password": "cms@2026",
+        "name": "Student 2",
+        "role": "student"
+    },
+    {
+        "email": "student3@cms.ac.in",
+        "password": "cms@2026",
+        "name": "Student 3",
+        "role": "student"
+    }
+]
