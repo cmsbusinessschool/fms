@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Faculty Login</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+background:linear-gradient(135deg,#0f172a,#2563eb);
+}
+
+.login-box{
+
+width:400px;
+background:white;
+padding:40px;
+border-radius:20px;
+box-shadow:0 20px 40px rgba(0,0,0,.25);
+
+}
+
+h2{
+text-align:center;
+margin-bottom:25px;
+color:#0f172a;
+}
+
+input{
+
+width:100%;
+padding:12px;
+margin-bottom:15px;
+border:1px solid #ddd;
+border-radius:10px;
+
+}
+
+button{
+
+width:100%;
+padding:12px;
+background:#2563eb;
+border:none;
+color:white;
+font-weight:600;
+border-radius:10px;
+cursor:pointer;
+
+}
+
+button:hover{
+background:#1d4ed8;
+}
+
+.error{
+color:red;
+text-align:center;
+margin-top:10px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="login-box">
+
+<h2>Faculty Login</h2>
+
+<input
+type="email"
+id="email"
+placeholder="Faculty Email">
+
+<input
+type="password"
+id="password"
+placeholder="Password">
+
+<button onclick="loginFaculty()">
+Login
+</button>
+
+<p id="msg"></p>
+
+</div>
+
+<script>
+
+async function loginFaculty(){
+
+const email =
+document.getElementById("email")
+.value
+.trim()
+.toLowerCase();
+
+const password =
+document.getElementById("password")
+.value
+.trim();
+
+try{
+
+const response =
+await fetch("../data/faculty.json");
+
+const faculty =
+await response.json();
+
+const user =
+faculty.find(f =>
+
+f.email.toLowerCase() === email &&
+f.password === password
+
+);
+
+if(user){
+
+localStorage.setItem(
+"facultyEmail",
+email
+);
+
+window.location.href =
+"../dashboard/faculty.html";
+
+}
+else{
+
+document.getElementById(
+"msg"
+).innerHTML =
+"<span class='error'>Invalid Login</span>";
+
+}
+
+}
+catch(err){
+
+document.getElementById(
+"msg"
+).innerHTML =
+"<span class='error'>faculty.json not found</span>";
+
+}
+
+}
+
+</script>
+
+</body>
+</html>
