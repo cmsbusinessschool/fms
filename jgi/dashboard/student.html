@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -34,6 +36,7 @@ position:fixed;
 left:0;
 top:0;
 padding-top:20px;
+overflow-y:auto;
 }
 
 .sidebar h2{
@@ -58,7 +61,7 @@ background:#2563eb;
 margin-right:10px;
 }
 
-/* Main */
+/* Main Content */
 
 .main{
 margin-left:260px;
@@ -93,7 +96,7 @@ margin-bottom:15px;
 color:#2563eb;
 }
 
-/* Assignment List */
+/* Assignments */
 
 .assignment{
 display:flex;
@@ -161,24 +164,41 @@ margin-bottom:10px;
 border-radius:10px;
 display:flex;
 justify-content:space-between;
+align-items:center;
+}
+
+.success{
+color:green;
+margin-top:10px;
+}
+
+.info{
+color:#64748b;
 }
 
 /* Mobile */
 
 @media(max-width:768px){
 
+body{
+flex-direction:column;
+}
+
 .sidebar{
+position:relative;
 width:100%;
 height:auto;
-position:relative;
 }
 
 .main{
 margin-left:0;
 }
 
-body{
+.assignment,
+.resource{
 flex-direction:column;
+align-items:flex-start;
+gap:10px;
 }
 
 }
@@ -189,6 +209,8 @@ flex-direction:column;
 
 <body>
 
+<!-- Sidebar -->
+
 <div class="sidebar">
 
 <h2>CMS LMS</h2>
@@ -197,7 +219,7 @@ flex-direction:column;
 
 <a href="#"><i class="fa fa-book"></i> Assignments</a>
 
-<a href="#"><i class="fa fa-upload"></i> Upload</a>
+<a href="#"><i class="fa fa-upload"></i> Upload Assignment</a>
 
 <a href="#"><i class="fa fa-file"></i> Resources</a>
 
@@ -205,47 +227,39 @@ flex-direction:column;
 
 <a href="#"><i class="fa fa-user"></i> Profile</a>
 
-<a href="#"><i class="fa fa-sign-out"></i> Logout</a>
+<a href="#" onclick="logout()">
+<i class="fa fa-sign-out"></i> Logout
+</a>
 
 </div>
+
+<!-- Main -->
 
 <div class="main">
 
 <div class="header">
 
-<h1>Welcome Student</h1>
+<h1 id="welcomeUser">
+Welcome Student
+</h1>
 
-<p>Learning Management System Dashboard</p>
+<p>
+Learning Management System Dashboard
+</p>
 
 </div>
 
-<!-- Assignment Questions -->
+<!-- Assignments -->
 
 <div class="card">
 
 <h2>Assignment Questions</h2>
 
-<div class="assignment">
+<div id="assignmentContainer">
 
-<span>Business Analytics Assignment.pdf</span>
-
-<a href="#" class="download-btn">Download</a>
-
-</div>
-
-<div class="assignment">
-
-<span>Machine Learning Case Study.docx</span>
-
-<a href="#" class="download-btn">Download</a>
-
-</div>
-
-<div class="assignment">
-
-<span>Data Visualization Exercise.xlsx</span>
-
-<a href="#" class="download-btn">Download</a>
+<p class="info">
+No assignments uploaded by faculty yet.
+</p>
 
 </div>
 
@@ -257,9 +271,15 @@ flex-direction:column;
 
 <h2>Upload Assignment</h2>
 
-<input type="file">
+<input
+type="file"
+id="assignmentFile">
 
-<button>Upload Assignment</button>
+<button onclick="uploadAssignment()">
+Upload Assignment
+</button>
+
+<p id="uploadStatus"></p>
 
 </div>
 
@@ -271,25 +291,40 @@ flex-direction:column;
 
 <div class="resource">
 
-<span>Business Analytics PPT</span>
+<span>
+Business Analytics Notes.pdf
+</span>
 
-<a href="#" class="download-btn">View</a>
-
-</div>
-
-<div class="resource">
-
-<span>ML Lecture Notes</span>
-
-<a href="#" class="download-btn">View</a>
+<a href="#"
+class="download-btn">
+View
+</a>
 
 </div>
 
 <div class="resource">
 
-<span>Case Study Repository</span>
+<span>
+Machine Learning PPT.pptx
+</span>
 
-<a href="#" class="download-btn">View</a>
+<a href="#"
+class="download-btn">
+View
+</a>
+
+</div>
+
+<div class="resource">
+
+<span>
+Case Study Repository.xlsx
+</span>
+
+<a href="#"
+class="download-btn">
+View
+</a>
 
 </div>
 
@@ -301,41 +336,226 @@ flex-direction:column;
 
 <h2>Faculty Feedback</h2>
 
-<select>
+<select id="faculty">
 
-<option>Select Faculty</option>
+<option value="">
+Select Faculty
+</option>
 
-<option>Dr Harsha</option>
+<option>
+Dr Harsha
+</option>
 
-<option>Dr Shalu</option>
+<option>
+Dr Shalu
+</option>
 
-<option>Dr Trina</option>
+<option>
+Dr Trina
+</option>
 
 </select>
 
-<select>
+<select id="rating">
+
+<option value="">
+Select Rating
+</option>
 
 <option>5 - Excellent</option>
-
 <option>4 - Very Good</option>
-
 <option>3 - Good</option>
-
 <option>2 - Average</option>
-
 <option>1 - Poor</option>
 
 </select>
 
-<textarea placeholder="Enter comments here"></textarea>
+<textarea
+id="comments"
+placeholder="Enter comments here">
+</textarea>
 
-<button class="feedback-btn">
+<button
+class="feedback-btn"
+onclick="submitFeedback()">
+
 Submit Feedback
+
 </button>
 
+<p id="feedbackStatus"></p>
+
 </div>
 
 </div>
+
+<script>
+
+/* =====================
+   LOGIN CHECK
+===================== */
+
+const student =
+localStorage.getItem(
+"studentEmail"
+);
+
+if(!student){
+
+window.location.href =
+"../pages/student-login.html";
+
+}
+
+document.getElementById(
+"welcomeUser"
+).innerHTML =
+"Welcome : " + student;
+
+/* =====================
+   LOGOUT
+===================== */
+
+function logout(){
+
+localStorage.removeItem(
+"studentEmail"
+);
+
+window.location.href =
+"../pages/student-login.html";
+
+}
+
+/* =====================
+   ASSIGNMENTS
+===================== */
+
+/*
+Faculty uploads will later
+come from Google Drive
+or Google Sheet
+*/
+
+const assignments = [];
+
+/* Example
+
+const assignments = [
+
+{
+name:"Business Analytics Assignment.pdf",
+link:"#"
+},
+
+{
+name:"Machine Learning Case Study.docx",
+link:"#"
+}
+
+];
+
+*/
+
+const container =
+document.getElementById(
+"assignmentContainer"
+);
+
+if(assignments.length > 0){
+
+container.innerHTML = "";
+
+assignments.forEach(a=>{
+
+container.innerHTML +=
+
+`<div class="assignment">
+
+<span>${a.name}</span>
+
+<a href="${a.link}"
+class="download-btn">
+
+Download
+
+</a>
+
+</div>`;
+
+});
+
+}
+
+/* =====================
+   UPLOAD ASSIGNMENT
+===================== */
+
+function uploadAssignment(){
+
+const file =
+document.getElementById(
+"assignmentFile"
+).files[0];
+
+if(!file){
+
+alert(
+"Please select a file."
+);
+
+return;
+
+}
+
+document.getElementById(
+"uploadStatus"
+).innerHTML =
+"Assignment uploaded successfully.";
+
+}
+
+/* =====================
+   FEEDBACK
+===================== */
+
+function submitFeedback(){
+
+const faculty =
+document.getElementById(
+"faculty"
+).value;
+
+const rating =
+document.getElementById(
+"rating"
+).value;
+
+if(
+faculty === "" ||
+rating === ""
+){
+
+alert(
+"Please complete all fields."
+);
+
+return;
+
+}
+
+document.getElementById(
+"feedbackStatus"
+).innerHTML =
+"Feedback submitted successfully.";
+
+document.getElementById(
+"comments"
+).value = "";
+
+}
+
+</script>
 
 </body>
 </html>
