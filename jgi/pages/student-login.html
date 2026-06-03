@@ -1,59 +1,174 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
 <title>Student Login</title>
 
-<link rel="stylesheet" href="../css/style.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet">
 
 <style>
 
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
 body{
-    margin:0;
-    font-family:Poppins,sans-serif;
-    background:linear-gradient(135deg,#0f172a,#2563eb);
-    height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+background:linear-gradient(
+135deg,
+#0f172a,
+#1e293b,
+#2563eb
+);
 }
 
-.login-card{
-    width:420px;
-    background:#fff;
-    padding:35px;
-    border-radius:20px;
-    box-shadow:0 20px 40px rgba(0,0,0,.2);
+.login-container{
+
+width:420px;
+
+background:white;
+
+padding:40px;
+
+border-radius:20px;
+
+box-shadow:0 20px 40px rgba(0,0,0,.25);
+
 }
 
-.login-card h2{
-    text-align:center;
-    margin-bottom:25px;
+.logo{
+
+text-align:center;
+
+margin-bottom:20px;
+
+}
+
+.logo img{
+
+width:100px;
+
+}
+
+h2{
+
+text-align:center;
+
+margin-bottom:25px;
+
+color:#0f172a;
+
+}
+
+.input-group{
+
+margin-bottom:15px;
+
 }
 
 input{
-    width:100%;
-    padding:12px;
-    margin-bottom:15px;
-    border:1px solid #ddd;
-    border-radius:10px;
+
+width:100%;
+
+padding:12px;
+
+border:1px solid #d1d5db;
+
+border-radius:10px;
+
+font-size:15px;
+
+}
+
+input:focus{
+
+outline:none;
+
+border-color:#2563eb;
+
 }
 
 button{
-    width:100%;
-    padding:12px;
-    border:none;
-    border-radius:10px;
-    background:#2563eb;
-    color:white;
-    cursor:pointer;
+
+width:100%;
+
+padding:12px;
+
+background:#2563eb;
+
+color:white;
+
+border:none;
+
+border-radius:10px;
+
+font-size:16px;
+
+font-weight:600;
+
+cursor:pointer;
+
+transition:.3s;
+
+}
+
+button:hover{
+
+background:#1d4ed8;
+
 }
 
 .error{
-    color:red;
-    text-align:center;
-    margin-top:10px;
+
+margin-top:15px;
+
+text-align:center;
+
+color:red;
+
+font-size:14px;
+
+}
+
+.success{
+
+margin-top:15px;
+
+text-align:center;
+
+color:green;
+
+font-size:14px;
+
+}
+
+.back{
+
+text-align:center;
+
+margin-top:15px;
+
+}
+
+.back a{
+
+text-decoration:none;
+
+color:#2563eb;
+
 }
 
 </style>
@@ -62,23 +177,46 @@ button{
 
 <body>
 
-<div class="login-card">
+<div class="login-container">
 
-    <h2>Student Login</h2>
+<div class="logo">
 
-    <input type="email"
-           id="email"
-           placeholder="Enter Email">
+<img src="../assets/logo.png"
+     alt="CMS Logo">
 
-    <input type="password"
-           id="password"
-           placeholder="Enter Password">
+</div>
 
-    <button onclick="loginStudent()">
-        Login
-    </button>
+<h2>Student Login</h2>
 
-    <div id="msg" class="error"></div>
+<div class="input-group">
+
+<input type="email"
+       id="email"
+       placeholder="Enter Email ID">
+
+</div>
+
+<div class="input-group">
+
+<input type="password"
+       id="password"
+       placeholder="Enter Password">
+
+</div>
+
+<button onclick="loginStudent()">
+Login
+</button>
+
+<div id="message"></div>
+
+<div class="back">
+
+<a href="../index.html">
+Back to Home
+</a>
+
+</div>
 
 </div>
 
@@ -86,44 +224,85 @@ button{
 
 async function loginStudent(){
 
-    const email =
-    document.getElementById("email")
-    .value.trim();
+try{
 
-    const password =
-    document.getElementById("password")
-    .value.trim();
+const email =
+document.getElementById("email")
+.value
+.trim()
+.toLowerCase();
 
-    const response =
-    await fetch("../data/students.json");
+const password =
+document.getElementById("password")
+.value
+.trim();
 
-    const students =
-    await response.json();
+const response =
+await fetch("../data/students.json");
 
-    const user =
-    students.find(s =>
-        s.email === email &&
-        s.password === password
-    );
+if(!response.ok){
 
-    if(user){
+throw new Error(
+"students.json not found"
+);
 
-        localStorage.setItem(
-            "studentEmail",
-            email
-        );
+}
 
-        window.location.href =
-        "../dashboard/student.html";
+const students =
+await response.json();
 
-    }
-    else{
+const user =
+students.find(student =>
 
-        document.getElementById("msg")
-        .innerHTML =
-        "Invalid Email or Password";
+student.email.toLowerCase()
+=== email &&
 
-    }
+student.password
+=== password
+
+);
+
+if(user){
+
+localStorage.setItem(
+"studentEmail",
+email
+);
+
+document.getElementById(
+"message"
+).innerHTML =
+'<div class="success">Login Successful...</div>';
+
+setTimeout(()=>{
+
+window.location.href =
+"../dashboard/student.html";
+
+},1000);
+
+}
+else{
+
+document.getElementById(
+"message"
+).innerHTML =
+'<div class="error">Invalid Email or Password</div>';
+
+}
+
+}
+catch(error){
+
+document.getElementById(
+"message"
+).innerHTML =
+'<div class="error">Unable to load students.json</div>';
+
+console.log(error);
+
+}
+
 }
 
 </script>
