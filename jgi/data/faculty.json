@@ -1,0 +1,23 @@
+[
+  {
+    "email": "dr.praveengujjar@cms.ac.in",
+    "password": "cms@2026",
+    "name": "Dr. Praveen Gujjar",
+    "designation": "Associate Professor",
+    "role": "faculty"
+  },
+  {
+    "email": "harsha@cms.ac.in",
+    "password": "cms@2026",
+    "name": "Dr. Harsha",
+    "designation": "Faculty",
+    "role": "faculty"
+  },
+  {
+    "email": "krishna.koppa@cms.ac.in",
+    "password": "cms@2026",
+    "name": "Dr. Krishna Koppa",
+    "designation": "Faculty",
+    "role": "faculty"
+  }
+]
