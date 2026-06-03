@@ -1,12 +1,15 @@
 <!DOCTYPE html>
+
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Faculty Login</title>
+<title>Faculty Login | CMS LMS</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
 
@@ -18,60 +21,185 @@ font-family:'Poppins',sans-serif;
 }
 
 body{
+
 height:100vh;
+
 display:flex;
 justify-content:center;
 align-items:center;
-background:linear-gradient(135deg,#0f172a,#2563eb);
+
+background:linear-gradient(
+135deg,
+#0f172a,
+#1e293b,
+#2563eb
+);
+
+padding:20px;
+
 }
 
-.login-box{
+.login-container{
 
-width:400px;
+width:420px;
+
 background:white;
+
 padding:40px;
+
 border-radius:20px;
+
 box-shadow:0 20px 40px rgba(0,0,0,.25);
+
+text-align:center;
+
+}
+
+.logo{
+
+margin-bottom:20px;
+
+}
+
+.logo img{
+
+width:140px;
+height:auto;
+object-fit:contain;
 
 }
 
 h2{
-text-align:center;
-margin-bottom:25px;
+
 color:#0f172a;
+margin-bottom:25px;
+
+}
+
+.input-group{
+
+margin-bottom:15px;
+
 }
 
 input{
 
 width:100%;
+
 padding:12px;
-margin-bottom:15px;
-border:1px solid #ddd;
+
+border:1px solid #d1d5db;
+
 border-radius:10px;
+
+font-size:15px;
 
 }
 
-button{
+input:focus{
+
+outline:none;
+border-color:#2563eb;
+
+}
+
+.login-btn{
 
 width:100%;
+
 padding:12px;
+
 background:#2563eb;
-border:none;
+
 color:white;
-font-weight:600;
+
+border:none;
+
 border-radius:10px;
+
+font-size:16px;
+
+font-weight:600;
+
 cursor:pointer;
+
+transition:.3s;
 
 }
 
-button:hover{
+.login-btn:hover{
+
 background:#1d4ed8;
+
+}
+
+.home-btn{
+
+display:block;
+
+margin-top:15px;
+
+padding:12px;
+
+background:#10b981;
+
+color:white;
+
+text-decoration:none;
+
+border-radius:10px;
+
+font-weight:600;
+
+transition:.3s;
+
+}
+
+.home-btn:hover{
+
+background:#059669;
+
 }
 
 .error{
+
+margin-top:15px;
 color:red;
-text-align:center;
-margin-top:10px;
+font-size:14px;
+
+}
+
+.success{
+
+margin-top:15px;
+color:green;
+font-size:14px;
+
+}
+
+.footer{
+
+margin-top:20px;
+font-size:13px;
+color:#64748b;
+
+}
+
+@media(max-width:500px){
+
+.login-container{
+
+width:100%;
+padding:25px;
+
+}
+
+.logo img{
+
+width:110px;
+
+}
+
 }
 
 </style>
@@ -80,31 +208,67 @@ margin-top:10px;
 
 <body>
 
-<div class="login-box">
+<div class="login-container">
+
+<div class="logo">
+
+<img
+src="../assets/logo.png"
+alt="CMS Logo">
+
+</div>
 
 <h2>Faculty Login</h2>
+
+<div class="input-group">
 
 <input
 type="email"
 id="email"
-placeholder="Faculty Email">
+placeholder="Faculty Email ID">
+
+</div>
+
+<div class="input-group">
 
 <input
 type="password"
 id="password"
 placeholder="Password">
 
-<button onclick="loginFaculty()">
+</div>
+
+<button
+class="login-btn"
+onclick="loginFaculty()">
+
 Login
+
 </button>
 
-<p id="msg"></p>
+<a
+href="../index.html"
+class="home-btn">
+
+Home
+
+</a>
+
+<div id="message"></div>
+
+<div class="footer">
+
+CMS Learning Management System
+
+</div>
 
 </div>
 
 <script>
 
 async function loginFaculty(){
+
+try{
 
 const email =
 document.getElementById("email")
@@ -117,10 +281,16 @@ document.getElementById("password")
 .value
 .trim();
 
-try{
-
 const response =
 await fetch("../data/faculty.json");
+
+if(!response.ok){
+
+throw new Error(
+"faculty.json not found"
+);
+
+}
 
 const faculty =
 await response.json();
@@ -129,6 +299,7 @@ const user =
 faculty.find(f =>
 
 f.email.toLowerCase() === email &&
+
 f.password === password
 
 );
@@ -140,26 +311,37 @@ localStorage.setItem(
 email
 );
 
+document.getElementById(
+"message"
+).innerHTML =
+'<div class="success">Login Successful...</div>';
+
+setTimeout(()=>{
+
 window.location.href =
 "../dashboard/faculty.html";
+
+},1000);
 
 }
 else{
 
 document.getElementById(
-"msg"
+"message"
 ).innerHTML =
-"<span class='error'>Invalid Login</span>";
+'<div class="error">Invalid Email or Password</div>';
 
 }
 
 }
-catch(err){
+catch(error){
 
 document.getElementById(
-"msg"
+"message"
 ).innerHTML =
-"<span class='error'>faculty.json not found</span>";
+'<div class="error">Unable to load faculty.json</div>';
+
+console.log(error);
 
 }
 
