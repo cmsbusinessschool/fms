@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Student Dashboard</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+background:#f4f7fb;
+display:flex;
+}
+
+/* Sidebar */
+
+.sidebar{
+width:260px;
+background:#0f172a;
+height:100vh;
+position:fixed;
+left:0;
+top:0;
+padding-top:20px;
+}
+
+.sidebar h2{
+color:white;
+text-align:center;
+margin-bottom:30px;
+}
+
+.sidebar a{
+display:block;
+padding:15px 25px;
+color:white;
+text-decoration:none;
+transition:.3s;
+}
+
+.sidebar a:hover{
+background:#2563eb;
+}
+
+.sidebar i{
+margin-right:10px;
+}
+
+/* Main */
+
+.main{
+margin-left:260px;
+padding:30px;
+width:100%;
+}
+
+.header{
+background:white;
+padding:20px;
+border-radius:15px;
+box-shadow:0 3px 10px rgba(0,0,0,.08);
+margin-bottom:25px;
+}
+
+.header h1{
+color:#0f172a;
+}
+
+/* Cards */
+
+.card{
+background:white;
+padding:25px;
+border-radius:15px;
+box-shadow:0 3px 10px rgba(0,0,0,.08);
+margin-bottom:25px;
+}
+
+.card h2{
+margin-bottom:15px;
+color:#2563eb;
+}
+
+/* Assignment List */
+
+.assignment{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:15px;
+background:#f8fafc;
+border-radius:10px;
+margin-bottom:10px;
+}
+
+.download-btn{
+background:#2563eb;
+color:white;
+padding:8px 15px;
+border-radius:8px;
+text-decoration:none;
+}
+
+/* Upload */
+
+input[type=file]{
+width:100%;
+padding:12px;
+border:1px solid #ddd;
+border-radius:8px;
+margin-bottom:15px;
+}
+
+button{
+background:#10b981;
+color:white;
+border:none;
+padding:12px 25px;
+border-radius:8px;
+cursor:pointer;
+}
+
+/* Feedback */
+
+select,
+textarea{
+width:100%;
+padding:12px;
+border:1px solid #ddd;
+border-radius:8px;
+margin-bottom:15px;
+}
+
+textarea{
+height:120px;
+resize:none;
+}
+
+.feedback-btn{
+background:#f59e0b;
+}
+
+/* Resources */
+
+.resource{
+padding:15px;
+background:#f8fafc;
+margin-bottom:10px;
+border-radius:10px;
+display:flex;
+justify-content:space-between;
+}
+
+/* Mobile */
+
+@media(max-width:768px){
+
+.sidebar{
+width:100%;
+height:auto;
+position:relative;
+}
+
+.main{
+margin-left:0;
+}
+
+body{
+flex-direction:column;
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="sidebar">
+
+<h2>CMS LMS</h2>
+
+<a href="#"><i class="fa fa-home"></i> Dashboard</a>
+
+<a href="#"><i class="fa fa-book"></i> Assignments</a>
+
+<a href="#"><i class="fa fa-upload"></i> Upload</a>
+
+<a href="#"><i class="fa fa-file"></i> Resources</a>
+
+<a href="#"><i class="fa fa-star"></i> Feedback</a>
+
+<a href="#"><i class="fa fa-user"></i> Profile</a>
+
+<a href="#"><i class="fa fa-sign-out"></i> Logout</a>
+
+</div>
+
+<div class="main">
+
+<div class="header">
+
+<h1>Welcome Student</h1>
+
+<p>Learning Management System Dashboard</p>
+
+</div>
+
+<!-- Assignment Questions -->
+
+<div class="card">
+
+<h2>Assignment Questions</h2>
+
+<div class="assignment">
+
+<span>Business Analytics Assignment.pdf</span>
+
+<a href="#" class="download-btn">Download</a>
+
+</div>
+
+<div class="assignment">
+
+<span>Machine Learning Case Study.docx</span>
+
+<a href="#" class="download-btn">Download</a>
+
+</div>
+
+<div class="assignment">
+
+<span>Data Visualization Exercise.xlsx</span>
+
+<a href="#" class="download-btn">Download</a>
+
+</div>
+
+</div>
+
+<!-- Upload Assignment -->
+
+<div class="card">
+
+<h2>Upload Assignment</h2>
+
+<input type="file">
+
+<button>Upload Assignment</button>
+
+</div>
+
+<!-- Resources -->
+
+<div class="card">
+
+<h2>Resource Materials</h2>
+
+<div class="resource">
+
+<span>Business Analytics PPT</span>
+
+<a href="#" class="download-btn">View</a>
+
+</div>
+
+<div class="resource">
+
+<span>ML Lecture Notes</span>
+
+<a href="#" class="download-btn">View</a>
+
+</div>
+
+<div class="resource">
+
+<span>Case Study Repository</span>
+
+<a href="#" class="download-btn">View</a>
+
+</div>
+
+</div>
+
+<!-- Feedback -->
+
+<div class="card">
+
+<h2>Faculty Feedback</h2>
+
+<select>
+
+<option>Select Faculty</option>
+
+<option>Dr Harsha</option>
+
+<option>Dr Shalu</option>
+
+<option>Dr Trina</option>
+
+</select>
+
+<select>
+
+<option>5 - Excellent</option>
+
+<option>4 - Very Good</option>
+
+<option>3 - Good</option>
+
+<option>2 - Average</option>
+
+<option>1 - Poor</option>
+
+</select>
+
+<textarea placeholder="Enter comments here"></textarea>
+
+<button class="feedback-btn">
+Submit Feedback
+</button>
+
+</div>
+
+</div>
+
+</body>
+</html>
