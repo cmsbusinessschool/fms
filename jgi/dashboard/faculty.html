@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Faculty Dashboard</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+background:#f4f7fb;
+display:flex;
+}
+
+.sidebar{
+
+width:260px;
+background:#0f172a;
+height:100vh;
+position:fixed;
+
+}
+
+.sidebar h2{
+
+color:white;
+text-align:center;
+padding:20px;
+
+}
+
+.sidebar a{
+
+display:block;
+padding:15px 25px;
+color:white;
+text-decoration:none;
+
+}
+
+.sidebar a:hover{
+
+background:#2563eb;
+
+}
+
+.main{
+
+margin-left:260px;
+padding:30px;
+width:100%;
+
+}
+
+.card{
+
+background:white;
+padding:25px;
+border-radius:15px;
+margin-bottom:20px;
+box-shadow:0 3px 10px rgba(0,0,0,.08);
+
+}
+
+.card h2{
+
+color:#2563eb;
+margin-bottom:15px;
+
+}
+
+input,
+textarea{
+
+width:100%;
+padding:12px;
+border:1px solid #ddd;
+border-radius:8px;
+margin-bottom:15px;
+
+}
+
+button{
+
+padding:12px 25px;
+border:none;
+background:#10b981;
+color:white;
+border-radius:8px;
+cursor:pointer;
+
+}
+
+.assignment{
+
+display:flex;
+justify-content:space-between;
+padding:15px;
+background:#f8fafc;
+margin-bottom:10px;
+border-radius:8px;
+
+}
+
+.download{
+
+background:#2563eb;
+padding:8px 15px;
+color:white;
+text-decoration:none;
+border-radius:8px;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="sidebar">
+
+<h2>CMS LMS</h2>
+
+<a href="#"><i class="fa fa-home"></i> Dashboard</a>
+
+<a href="#"><i class="fa fa-upload"></i> Upload Assignment</a>
+
+<a href="#"><i class="fa fa-book"></i> Resources</a>
+
+<a href="#"><i class="fa fa-users"></i> Student Submissions</a>
+
+<a href="#"><i class="fa fa-star"></i> Feedback</a>
+
+<a href="#" onclick="logout()">
+
+<i class="fa fa-sign-out"></i>
+Logout
+
+</a>
+
+</div>
+
+<div class="main">
+
+<div class="card">
+
+<h2 id="welcomeFaculty">
+
+Faculty Dashboard
+
+</h2>
+
+</div>
+
+<!-- Upload Assignment -->
+
+<div class="card">
+
+<h2>Upload Assignment Question</h2>
+
+<input type="text"
+placeholder="Assignment Title">
+
+<input type="file">
+
+<button>
+Upload Assignment
+</button>
+
+</div>
+
+<!-- Upload Resources -->
+
+<div class="card">
+
+<h2>Upload Resource Material</h2>
+
+<input type="text"
+placeholder="Resource Name">
+
+<input type="file">
+
+<button>
+Upload Resource
+</button>
+
+</div>
+
+<!-- Student Submissions -->
+
+<div class="card">
+
+<h2>Student Submissions</h2>
+
+<div class="assignment">
+
+<span>
+No submissions available
+</span>
+
+</div>
+
+</div>
+
+<!-- Feedback -->
+
+<div class="card">
+
+<h2>Faculty Feedback Summary</h2>
+
+<p>
+Average Rating : 4.8 / 5
+</p>
+
+<p>
+Total Feedback : 145
+</p>
+
+</div>
+
+</div>
+
+<script>
+
+/* LOGIN CHECK */
+
+const faculty =
+localStorage.getItem(
+"facultyEmail"
+);
+
+if(!faculty){
+
+window.location.href =
+"../pages/faculty-login.html";
+
+}
+
+document.getElementById(
+"welcomeFaculty"
+).innerHTML =
+"Welcome : " + faculty;
+
+/* LOGOUT */
+
+function logout(){
+
+localStorage.removeItem(
+"facultyEmail"
+);
+
+window.location.href =
+"../pages/faculty-login.html";
+
+}
+
+</script>
+
+</body>
+
+</html>
