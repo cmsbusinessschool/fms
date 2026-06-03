@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Director Login | CMS LMS</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+background:linear-gradient(135deg,#0f172a,#1e293b,#2563eb);
+}
+
+.login-box{
+width:420px;
+background:white;
+padding:40px;
+border-radius:20px;
+box-shadow:0 20px 40px rgba(0,0,0,.25);
+text-align:center;
+}
+
+.logo{
+width:140px;
+margin-bottom:15px;
+}
+
+h2{
+margin-bottom:20px;
+color:#0f172a;
+}
+
+input{
+width:100%;
+padding:12px;
+margin-bottom:15px;
+border:1px solid #ddd;
+border-radius:10px;
+}
+
+button{
+width:100%;
+padding:12px;
+border:none;
+background:#f59e0b;
+color:white;
+font-weight:600;
+border-radius:10px;
+cursor:pointer;
+}
+
+.home-btn{
+display:block;
+margin-top:15px;
+padding:12px;
+background:#10b981;
+color:white;
+text-decoration:none;
+border-radius:10px;
+font-weight:600;
+}
+
+.error{
+color:red;
+margin-top:10px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="login-box">
+
+<img
+src="CMS New Logo (2).png"
+class="logo">
+
+<h2>Admin Login</h2>
+
+<input
+type="email"
+id="email"
+placeholder="Admin Email">
+
+<input
+type="password"
+id="password"
+placeholder="Password">
+
+<button onclick="loginDirector()">
+Login
+</button>
+
+<a
+href="../index.html"
+class="home-btn">
+Home
+</a>
+
+<p id="msg"></p>
+
+</div>
+
+<script>
+
+async function loginDirector(){
+
+const email =
+document.getElementById("email")
+.value.trim().toLowerCase();
+
+const password =
+document.getElementById("password")
+.value.trim();
+
+const response =
+await fetch("../data/director.json");
+
+const users =
+await response.json();
+
+const user =
+users.find(u=>
+
+u.email.toLowerCase()===email &&
+u.password===password
+
+);
+
+if(user){
+
+localStorage.setItem(
+"directorEmail",
+email
+);
+
+window.location.href=
+"../dashboard/director.html";
+
+}
+else{
+
+document.getElementById(
+"msg"
+).innerHTML=
+"<span class='error'>Invalid Login</span>";
+
+}
+
+}
+
+</script>
+
+</body>
+</html>
